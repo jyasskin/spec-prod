@@ -6,7 +6,7 @@ on:
       - "test/**"
       - "tsconfig.json"
       - "package.json"
-      - "yarn.lock"
+      - "pnpm-lock.yaml"
       - ".github/workflows/**"
 
 env:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
-          cache: yarn
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build --noEmit
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm build --noEmit

@@ -42,19 +42,16 @@ export function formatAsHeading(text: string, symbol = "=") {
 }
 
 /**
- * Locally install a npm package using Yarn.
+ * Locally install a npm package using pnpm.
  */
-export function install(name: string | string[], env: ExecOptions["env"] = {}) {
+export function install(name: string, env: ExecOptions["env"] = {}) {
 	if (Array.isArray(name)) {
 		name = name.join(" ");
 	}
-	return sh(`yarn add ${name} --no-progress`, { cwd: ACTION_DIR, env }).then(
+	return sh(`pnpm add ${name}`, { cwd: ACTION_DIR, env }).then(
 		output => {
-			const re = new RegExp(
-				String.raw`\s(${(name as string).replace(/@.+/, "")})@(.+)$`,
-			);
-			const versionLine = output.split("\n").find(line => re.test(line));
-			if (versionLine) {
+			const versionLine = output.split("\n").slice(-1)[0];
+			if (versionLine && versionLine.includes(name.replace(/@.+/, ""))) {
 				console.log(versionLine);
 			}
 			return output;

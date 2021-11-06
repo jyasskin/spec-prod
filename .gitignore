@@ -3,3 +3,4 @@ python_modules
 .vscode
 *.js
 *.map
+*.log
